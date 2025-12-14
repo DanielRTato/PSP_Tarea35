@@ -31,6 +31,8 @@ public class Main {
             JsonNode rootNode = mapper.readTree(response.body());
             JsonNode dataArray = rootNode.path("data");
 
+            boolean encontrado = false;
+
             for (JsonNode coin: dataArray) {
                 String name = coin.get("name").asText().toLowerCase();
                 String simbolo = coin.get("symbol").asText().toLowerCase();
@@ -48,7 +50,13 @@ public class Main {
                         System.out.println("Cambio 24h: " + RED + coin.get("percent_change_24h").asText() + "%" + "\u001B[0m");
 
                     }
+                    encontrado = true;
+                    break;
                 }
+            }
+
+            if (!encontrado) {
+                System.out.println("Moneda no encontrada");
             }
 
 
